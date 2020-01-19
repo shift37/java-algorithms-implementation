@@ -89,8 +89,9 @@ public class Strings {
 
     private static final String print(String[] strings) {
         StringBuilder builder = new StringBuilder();
-        for (String s : strings)
+        for (String s : strings) {
             builder.append(s).append(' ');
+        }
         return builder.toString();
     }
 }
