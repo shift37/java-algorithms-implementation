@@ -34,12 +34,14 @@ public class Sorts {
         }
 
         sorted = new Integer[SIZE];
-        for (i = 0; i < sorted.length; i++)
+        for (i = 0; i < sorted.length; i++) {
             sorted[i] = i;
+        }
 
         reverse = new Integer[SIZE];
-        for (i = (reverse.length - 1); i >= 0; i--)
+        for (i = (reverse.length - 1); i >= 0; i--) {
             reverse[i] = (SIZE - 1) - i;
+        }
     }
 
     @Test
@@ -156,8 +158,9 @@ public class Sorts {
 
     private static final boolean check(Integer[] array) {
         for (int i = 1; i<array.length; i++) {
-            if (array[i-1]>array[i])
+            if (array[i-1]>array[i]) {
                 return false;
+            }
         }
         return true;
     }

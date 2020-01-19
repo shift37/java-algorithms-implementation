@@ -156,7 +156,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
             parent.addChild(left);
             parent.addChild(right);
 
-            if (parent.numberOfKeys() > maxKeySize) split(parent);
+            if (parent.numberOfKeys() > maxKeySize) {
+                split(parent);
+            }
         }
     }
 
@@ -181,7 +183,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
      * @return True if value was removed from the tree.
      */
     private T remove(T value, Node<T> node) {
-        if (node == null) return null;
+        if (node == null) {
+            return null;
+        }
 
         T removed = null;
         int index = node.indexOf(value);
@@ -258,10 +262,11 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
         while (node != null) {
             T lesser = node.getKey(0);
             if (value.compareTo(lesser) < 0) {
-                if (node.numberOfChildren() > 0)
+                if (node.numberOfChildren() > 0) {
                     node = node.getChild(0);
-                else
+                } else {
                     node = null;
+                }
                 continue;
             }
 
@@ -269,10 +274,11 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
             int last = size - 1;
             T greater = node.getKey(last);
             if (value.compareTo(greater) > 0) {
-                if (node.numberOfChildren() > size)
+                if (node.numberOfChildren() > size) {
                     node = node.getChild(size);
-                else
+                } else {
                     node = null;
+                }
                 continue;
             }
 
@@ -431,8 +437,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
     private int getIndexOfPreviousValue(Node<T> node, T value) {
         for (int i = 1; i < node.numberOfKeys(); i++) {
             T t = node.getKey(i);
-            if (t.compareTo(value) >= 0)
+            if (t.compareTo(value) >= 0) {
                 return i - 1;
+            }
         }
         return node.numberOfKeys() - 1;
     }
@@ -449,8 +456,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
     private int getIndexOfNextValue(Node<T> node, T value) {
         for (int i = 0; i < node.numberOfKeys(); i++) {
             T t = node.getKey(i);
-            if (t.compareTo(value) >= 0)
+            if (t.compareTo(value) >= 0) {
                 return i;
+            }
         }
         return node.numberOfKeys() - 1;
     }
@@ -468,7 +476,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
      */
     @Override
     public boolean validate() {
-        if (root == null) return true;
+        if (root == null) {
+            return true;
+        }
         return validateNode(root);
     }
 
@@ -486,8 +496,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
             for (int i = 1; i < keySize; i++) {
                 T p = node.getKey(i - 1);
                 T n = node.getKey(i);
-                if (p.compareTo(n) > 0)
+                if (p.compareTo(n) > 0) {
                     return false;
+                }
             }
         }
         int childrenSize = node.numberOfChildren();
@@ -539,17 +550,20 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
             T p = node.getKey(i - 1);
             T n = node.getKey(i);
             Node<T> c = node.getChild(i);
-            if (p.compareTo(c.getKey(0)) > 0)
+            if (p.compareTo(c.getKey(0)) > 0) {
                 return false;
-            if (n.compareTo(c.getKey(c.numberOfKeys() - 1)) < 0)
+            }
+            if (n.compareTo(c.getKey(c.numberOfKeys() - 1)) < 0) {
                 return false;
+            }
         }
 
         for (int i = 0; i < node.childrenSize; i++) {
             Node<T> c = node.getChild(i);
             boolean valid = this.validateNode(c);
-            if (!valid)
+            if (!valid) {
                 return false;
+            }
         }
 
         return true;
@@ -600,7 +614,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
 
         private int indexOf(T value) {
             for (int i = 0; i < keysSize; i++) {
-                if (keys[i].equals(value)) return i;
+                if (keys[i].equals(value)) {
+                    return i;
+                }
             }
             return -1;
         }
@@ -613,7 +629,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
         private T removeKey(T value) {
             T removed = null;
             boolean found = false;
-            if (keysSize == 0) return null;
+            if (keysSize == 0) {
+                return null;
+            }
             for (int i = 0; i < keysSize; i++) {
                 if (keys[i].equals(value)) {
                     found = true;
@@ -631,8 +649,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
         }
 
         private T removeKey(int index) {
-            if (index >= keysSize)
+            if (index >= keysSize) {
                 return null;
+            }
             T value = keys[index];
             for (int i = index + 1; i < keysSize; i++) {
                 // shift the rest of the keys down
@@ -648,15 +667,17 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
         }
 
         private Node<T> getChild(int index) {
-            if (index >= childrenSize)
+            if (index >= childrenSize) {
                 return null;
+            }
             return children[index];
         }
 
         private int indexOf(Node<T> child) {
             for (int i = 0; i < childrenSize; i++) {
-                if (children[i].equals(child))
+                if (children[i].equals(child)) {
                     return i;
+                }
             }
             return -1;
         }
@@ -688,8 +709,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
         }
 
         private Node<T> removeChild(int index) {
-            if (index >= childrenSize)
+            if (index >= childrenSize) {
                 return null;
+            }
             Node<T> value = children[index];
             children[index] = null;
             for (int i = index + 1; i < childrenSize; i++) {
@@ -716,8 +738,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
             for (int i = 0; i < numberOfKeys(); i++) {
                 T value = getKey(i);
                 builder.append(value);
-                if (i < numberOfKeys() - 1)
+                if (i < numberOfKeys() - 1) {
                     builder.append(", ");
+                }
             }
             builder.append("]\n");
 
@@ -726,8 +749,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
                 for (int i = 0; i < parent.numberOfKeys(); i++) {
                     T value = parent.getKey(i);
                     builder.append(value);
-                    if (i < parent.numberOfKeys() - 1)
+                    if (i < parent.numberOfKeys() - 1) {
                         builder.append(", ");
+                    }
                 }
                 builder.append("]\n");
             }
@@ -743,7 +767,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
     private static class TreePrinter {
 
         public static <T extends Comparable<T>> String getString(BTree<T> tree) {
-            if (tree.root == null) return "Tree has no nodes.";
+            if (tree.root == null) {
+                return "Tree has no nodes.";
+            }
             return getString(tree.root, "", true);
         }
 
@@ -754,8 +780,9 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
             for (int i = 0; i < node.numberOfKeys(); i++) {
                 T value = node.getKey(i);
                 builder.append(value);
-                if (i < node.numberOfKeys() - 1)
+                if (i < node.numberOfKeys() - 1) {
                     builder.append(", ");
+                }
             }
             builder.append("\n");
 

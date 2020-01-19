@@ -35,11 +35,14 @@ public class HeapSort<T extends Comparable<T>> {
             while (true) {
                 int left = (i * 2) + 1;
                 if (left >= index) // node has no left child
+                {
                     break;
+                }
                 int right = left + 1;
                 if (right >= index) { // node has a left child, but no right child
-                    if (unsorted[left].compareTo(unsorted[i]) > 0)
+                    if (unsorted[left].compareTo(unsorted[i]) > 0) {
                         swap(left, i, unsorted); // if left child is greater than node
+                    }
                     break;
                 }
                 T ithElement = unsorted[i];
