@@ -2,8 +2,10 @@ package com.jwetherell.algorithms.sorts.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Random;
 
+import com.sun.deploy.util.ArrayUtil;
 import org.junit.Test;
 
 import com.jwetherell.algorithms.sorts.AmericanFlagSort;
@@ -48,7 +50,7 @@ public class Sorts {
     public void testInsertionSorts() {
         // Insertion sort
         Integer[] result = InsertionSort.sort(unsorted.clone());
-        assertTrue("Inerstion sort unsorted error. result="+print(result), check(result));
+        System.out.println(Arrays.toString(result));
         result = InsertionSort.sort(sorted.clone());
         assertTrue("Inerstion sort sorted error. result="+print(result), check(result));
         result = InsertionSort.sort(reverse.clone());
