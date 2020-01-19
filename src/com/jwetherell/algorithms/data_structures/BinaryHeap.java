@@ -552,8 +552,11 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             if (node.right!=null) node.right.parent = lastNode;
 
             if (node.equals(root)) {
-                if (!lastNode.equals(root)) root = lastNode;
-                else root = null;
+                if (!lastNode.equals(root)) {
+                    root = lastNode;
+                } else {
+                    root = null;
+                }
             }
 
             size--;

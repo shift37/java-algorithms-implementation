@@ -124,12 +124,15 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
             // Find the parent of the replacement node to re-factor the
             // height/balance of the tree
             AVLNode<T> nodeToRefactor = null;
-            if (replacementNode != null)
+            if (replacementNode != null) {
                 nodeToRefactor = (AVLNode<T>) replacementNode.parent;
-            if (nodeToRefactor == null)
+            }
+            if (nodeToRefactor == null) {
                 nodeToRefactor = (AVLNode<T>) nodeToRemoved.parent;
-            if (nodeToRefactor != null && nodeToRefactor.equals(nodeToRemoved))
+            }
+            if (nodeToRefactor != null && nodeToRefactor.equals(nodeToRemoved)) {
                 nodeToRefactor = (AVLNode<T>) replacementNode;
+            }
 
             // Replace the node
             replaceNodeWithNode(nodeToRemoved, replacementNode);
@@ -163,17 +166,20 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
                 if (lesser >= greater) {
                     rotateRight(node);
                     node.updateHeight();
-                    if (node.parent != null)
+                    if (node.parent != null) {
                         ((AVLNode<T>) node.parent).updateHeight();
+                    }
                 } else {
                     rotateLeft(node.lesser);
                     rotateRight(node);
 
                     AVLNode<T> p = (AVLNode<T>) node.parent;
-                    if (p.lesser != null)
+                    if (p.lesser != null) {
                         ((AVLNode<T>) p.lesser).updateHeight();
-                    if (p.greater != null)
+                    }
+                    if (p.greater != null) {
                         ((AVLNode<T>) p.greater).updateHeight();
+                    }
                     p.updateHeight();
                 }
             } else if (balanceFactor == 2) {
@@ -184,17 +190,20 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
                 if (greater >= lesser) {
                     rotateLeft(node);
                     node.updateHeight();
-                    if (node.parent != null)
+                    if (node.parent != null) {
                         ((AVLNode<T>) node.parent).updateHeight();
+                    }
                 } else {
                     rotateRight(node.greater);
                     rotateLeft(node);
 
                     AVLNode<T> p = (AVLNode<T>) node.parent;
-                    if (p.lesser != null)
+                    if (p.lesser != null) {
                         ((AVLNode<T>) p.lesser).updateHeight();
-                    if (p.greater != null)
+                    }
+                    if (p.greater != null) {
                         ((AVLNode<T>) p.greater).updateHeight();
+                    }
                     p.updateHeight();
                 }
             }
@@ -207,8 +216,9 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
     @Override
     protected boolean validateNode(Node<T> node) {
         boolean bst = super.validateNode(node);
-        if (!bst)
+        if (!bst) {
             return false;
+        }
 
         AVLNode<T> avlNode = (AVLNode<T>) node;
         int balanceFactor = avlNode.getBalanceFactor();
@@ -221,16 +231,19 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
         } else {
             AVLNode<T> avlNodeLesser = (AVLNode<T>) avlNode.lesser;
             int lesserHeight = 1;
-            if (avlNodeLesser != null)
+            if (avlNodeLesser != null) {
                 lesserHeight = avlNodeLesser.height;
+            }
 
             AVLNode<T> avlNodeGreater = (AVLNode<T>) avlNode.greater;
             int greaterHeight = 1;
-            if (avlNodeGreater != null)
+            if (avlNodeGreater != null) {
                 greaterHeight = avlNodeGreater.height;
+            }
 
-            if (avlNode.height == (lesserHeight + 1) || avlNode.height == (greaterHeight + 1))
+            if (avlNode.height == (lesserHeight + 1) || avlNode.height == (greaterHeight + 1)) {
                 return true;
+            }
             return false;
         }
 
@@ -335,14 +348,16 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
     protected static class AVLTreePrinter {
 
         public static <T extends Comparable<T>> String getString(AVLTree<T> tree) {
-            if (tree.root == null)
+            if (tree.root == null) {
                 return "Tree has no nodes.";
+            }
             return getString((AVLNode<T>) tree.root, "", true);
         }
 
         public static <T extends Comparable<T>> String getString(AVLNode<T> node) {
-            if (node == null)
+            if (node == null) {
                 return "Sub-tree has no nodes.";
+            }
             return getString(node, "", true);
         }
 
@@ -353,10 +368,12 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
             List<Node<T>> children = null;
             if (node.lesser != null || node.greater != null) {
                 children = new ArrayList<Node<T>>(2);
-                if (node.lesser != null)
+                if (node.lesser != null) {
                     children.add(node.lesser);
-                if (node.greater != null)
+                }
+                if (node.greater != null) {
                     children.add(node.greater);
+                }
             }
             if (children != null) {
                 for (int i = 0; i < children.size() - 1; i++) {
@@ -370,5 +387,9 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
 
             return builder.toString();
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("this is a test");
     }
 }

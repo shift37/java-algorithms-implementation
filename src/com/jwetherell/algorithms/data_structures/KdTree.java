@@ -34,8 +34,9 @@ public class KdTree<T extends KdTree.XYZPoint> {
         public int compare(XYZPoint o1, XYZPoint o2) {
             if (o1.x < o2.x)
                 return -1;
-            if (o1.x > o2.x)
+            if (o1.x > o2.x) {
                 return 1;
+            }
             return 0;
         }
     };
@@ -47,10 +48,12 @@ public class KdTree<T extends KdTree.XYZPoint> {
          */
         @Override
         public int compare(XYZPoint o1, XYZPoint o2) {
-            if (o1.y < o2.y)
+            if (o1.y < o2.y) {
                 return -1;
-            if (o1.y > o2.y)
+            }
+            if (o1.y > o2.y) {
                 return 1;
+            }
             return 0;
         }
     };
@@ -62,10 +65,12 @@ public class KdTree<T extends KdTree.XYZPoint> {
          */
         @Override
         public int compare(XYZPoint o1, XYZPoint o2) {
-            if (o1.z < o2.z)
+            if (o1.z < o2.z) {
                 return -1;
-            if (o1.z > o2.z)
+            }
+            if (o1.z > o2.z) {
                 return 1;
+            }
             return 0;
         }
     };
@@ -107,12 +112,13 @@ public class KdTree<T extends KdTree.XYZPoint> {
             return null;
 
         int axis = depth % k;
-        if (axis == X_AXIS)
+        if (axis == X_AXIS) {
             Collections.sort(list, X_COMPARATOR);
-        else if (axis == Y_AXIS)
+        } else if (axis == Y_AXIS) {
             Collections.sort(list, Y_COMPARATOR);
-        else
+        } else {
             Collections.sort(list, Z_COMPARATOR);
+        }
 
         KdNode node = null;
         if (list.size() > 0) {
@@ -205,8 +211,9 @@ public class KdTree<T extends KdTree.XYZPoint> {
      * @return True if tree contains value.
      */
     public boolean contains(T value) {
-        if (value == null)
+        if (value == null) {
             return false;
+        }
 
         KdNode node = getNode(this, value);
         return (node != null);
@@ -421,8 +428,9 @@ public class KdTree<T extends KdTree.XYZPoint> {
             boolean lineIntersectsCube = ((valuePlusDistance <= nodePoint) ? true : false);
 
             // Continue down lesser branch
-            if (lineIntersectsCube)
+            if (lineIntersectsCube) {
                 searchNode(value, lesser, K, results, examined);
+            }
         }
         if (greater != null && !examined.contains(greater)) {
             examined.add(greater);
@@ -442,8 +450,9 @@ public class KdTree<T extends KdTree.XYZPoint> {
             boolean lineIntersectsCube = ((valuePlusDistance >= nodePoint) ? true : false);
 
             // Continue down greater branch
-            if (lineIntersectsCube)
+            if (lineIntersectsCube) {
                 searchNode(value, greater, K, results, examined);
+            }
         }
     }
 
@@ -499,10 +508,12 @@ public class KdTree<T extends KdTree.XYZPoint> {
 
         public static int compareTo(int depth, int k, XYZPoint o1, XYZPoint o2) {
             int axis = depth % k;
-            if (axis == X_AXIS)
+            if (axis == X_AXIS) {
                 return X_COMPARATOR.compare(o1, o2);
-            if (axis == Y_AXIS)
+            }
+            if (axis == Y_AXIS) {
                 return Y_COMPARATOR.compare(o1, o2);
+            }
             return Z_COMPARATOR.compare(o1, o2);
         }
 
@@ -519,10 +530,12 @@ public class KdTree<T extends KdTree.XYZPoint> {
          */
         @Override
         public boolean equals(Object obj) {
-            if (obj == null)
+            if (obj == null) {
                 return false;
-            if (!(obj instanceof KdNode))
+            }
+            if (!(obj instanceof KdNode)) {
                 return false;
+            }
 
             KdNode kdNode = (KdNode) obj;
             if (this.compareTo(kdNode) == 0)
@@ -606,10 +619,12 @@ public class KdTree<T extends KdTree.XYZPoint> {
          */
         @Override
         public boolean equals(Object obj) {
-            if (obj == null)
+            if (obj == null) {
                 return false;
-            if (!(obj instanceof XYZPoint))
+            }
+            if (!(obj instanceof XYZPoint)) {
                 return false;
+            }
 
             XYZPoint xyzPoint = (XYZPoint) obj;
             return compareTo(xyzPoint) == 0;
@@ -621,11 +636,13 @@ public class KdTree<T extends KdTree.XYZPoint> {
         @Override
         public int compareTo(XYZPoint o) {
             int xComp = X_COMPARATOR.compare(this, o);
-            if (xComp != 0)
+            if (xComp != 0) {
                 return xComp;
+            }
             int yComp = Y_COMPARATOR.compare(this, o);
-            if (yComp != 0)
+            if (yComp != 0) {
                 return yComp;
+            }
             int zComp = Z_COMPARATOR.compare(this, o);
             return zComp;
         }
