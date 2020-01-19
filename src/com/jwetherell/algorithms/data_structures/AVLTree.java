@@ -389,7 +389,4 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> implem
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("this is a test");
-    }
 }
