@@ -21,7 +21,7 @@ import com.jwetherell.algorithms.sorts.ShellSort;
 public class Sorts {
 
     private static final Random RANDOM = new Random();
-    private static final int SIZE = 10000;
+    private static final int SIZE = 10;
 
     private static Integer[] unsorted = null;
     private static Integer[] sorted = null;

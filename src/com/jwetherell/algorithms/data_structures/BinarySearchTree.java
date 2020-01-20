@@ -171,8 +171,9 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
         node.parent = greater;
 
         node.greater = lesser;
-        if (lesser != null)
+        if (lesser != null) {
             lesser.parent = node;
+        }
 
         if (parentPosition != null) {
             if (parentPosition == Position.LEFT) {
@@ -214,8 +215,9 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
         node.parent = lesser;
 
         node.lesser = greater;
-        if (greater != null)
+        if (greater != null) {
             greater.parent = node;
+        }
 
         if (parentPosition != null) {
             if (parentPosition == Position.LEFT) {
@@ -240,16 +242,18 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
      *         sub-tree or NULL if startingNode has no greater children.
      */
     protected Node<T> getGreatest(Node<T> startingNode) {
-        if (startingNode == null)
+        if (startingNode == null) {
             return null;
+        }
 
         Node<T> greater = startingNode.greater;
         while (greater != null && greater.id != null) {
             Node<T> node = greater.greater;
-            if (node != null && node.id != null)
+            if (node != null && node.id != null) {
                 greater = node;
-            else
+            } else {
                 break;
+            }
         }
         return greater;
     }
@@ -264,16 +268,18 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
      *         sub-tree or NULL if startingNode has no lesser children.
      */
     protected Node<T> getLeast(Node<T> startingNode) {
-        if (startingNode == null)
+        if (startingNode == null) {
             return null;
+        }
 
         Node<T> lesser = startingNode.lesser;
         while (lesser != null && lesser.id != null) {
             Node<T> node = lesser.lesser;
-            if (node != null && node.id != null)
+            if (node != null && node.id != null) {
                 lesser = node;
-            else
+            } else {
                 break;
+            }
         }
         return lesser;
     }
@@ -296,7 +302,9 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
      */
     protected Node<T> removeValue(T value) {
         Node<T> nodeToRemoved = this.getNode(value);
-        if (nodeToRemoved != null) nodeToRemoved = removeNode(nodeToRemoved);
+        if (nodeToRemoved != null) {
+            nodeToRemoved = removeNode(nodeToRemoved);
+        }
         return nodeToRemoved;
     }
 
@@ -341,12 +349,14 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
             // greatest/least on deletion
             if (modifications % 2 != 0) {
                 replacement = this.getGreatest(nodeToRemoved.lesser);
-                if (replacement == null)
+                if (replacement == null) {
                     replacement = nodeToRemoved.lesser;
+                }
             } else {
                 replacement = this.getLeast(nodeToRemoved.greater);
-                if (replacement == null)
+                if (replacement == null) {
                     replacement = nodeToRemoved.greater;
+                }
             }
             modifications++;
         }
@@ -388,12 +398,14 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
                 Node<T> replacementParentGreater = replacementParent.greater;
                 if (replacementParentLesser != null && replacementParentLesser.equals(replacementNode)) {
                     replacementParent.lesser = replacementNodeGreater;
-                    if (replacementNodeGreater != null)
+                    if (replacementNodeGreater != null) {
                         replacementNodeGreater.parent = replacementParent;
+                    }
                 } else if (replacementParentGreater != null && replacementParentGreater.equals(replacementNode)) {
                     replacementParent.greater = replacementNodeLesser;
-                    if (replacementNodeLesser != null)
+                    if (replacementNodeLesser != null) {
                         replacementNodeLesser.parent = replacementParent;
+                    }
                 }
             }
         }
@@ -404,16 +416,19 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
         if (parent == null) {
             // Replacing the root node
             root = replacementNode;
-            if (root != null)
+            if (root != null) {
                 root.parent = null;
+            }
         } else if (parent.lesser != null && (parent.lesser.id.compareTo(nodeToRemoved.id) == 0)) {
             parent.lesser = replacementNode;
-            if (replacementNode != null)
+            if (replacementNode != null) {
                 replacementNode.parent = parent;
+            }
         } else if (parent.greater != null && (parent.greater.id.compareTo(nodeToRemoved.id) == 0)) {
             parent.greater = replacementNode;
-            if (replacementNode != null)
+            if (replacementNode != null) {
                 replacementNode.parent = parent;
+            }
         }
         size--;
     }
@@ -440,7 +455,9 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
      */
     @Override
     public boolean validate() {
-        if (root == null) return true;
+        if (root == null) {
+            return true;
+        }
         return validateNode(root);
     }
 
@@ -458,17 +475,20 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
         boolean lesserCheck = true;
         if (lesser != null && lesser.id != null) {
             lesserCheck = (lesser.id.compareTo(node.id) <= 0);
-            if (lesserCheck)
+            if (lesserCheck) {
                 lesserCheck = validateNode(lesser);
+            }
         }
-        if (!lesserCheck)
+        if (!lesserCheck) {
             return false;
+        }
 
         boolean greaterCheck = true;
         if (greater != null && greater.id != null) {
             greaterCheck = (greater.id.compareTo(node.id) > 0);
-            if (greaterCheck)
+            if (greaterCheck) {
                 greaterCheck = validateNode(greater);
+            }
         }
         return greaterCheck;
     }
@@ -485,14 +505,17 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
         Node<T> node = root;
         while (node != null) {
             values[count++] = node.id;
-            if (node.lesser != null)
+            if (node.lesser != null) {
                 queue.add(node.lesser);
-            if (node.greater != null)
+            }
+            if (node.greater != null) {
                 queue.add(node.greater);
-            if (!queue.isEmpty())
+            }
+            if (!queue.isEmpty()) {
                 node = queue.remove();
-            else
+            } else {
                 node = null;
+            }
         }
         return values;
     }
@@ -674,10 +697,12 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
             List<Node<T>> children = null;
             if (node.lesser != null || node.greater != null) {
                 children = new ArrayList<Node<T>>(2);
-                if (node.lesser != null)
+                if (node.lesser != null) {
                     children.add(node.lesser);
-                if (node.greater != null)
+                }
+                if (node.greater != null) {
                     children.add(node.greater);
+                }
             }
             if (children != null) {
                 for (int i = 0; i < children.size() - 1; i++) {
@@ -749,7 +774,9 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
 
             protected BinarySearchTreeIterator(BinarySearchTree<C> tree) {
                 this.tree = tree;
-                if (tree.root!=null) toVisit.add(tree.root);
+                if (tree.root!=null) {
+                    toVisit.add(tree.root);
+                }
             }
 
             /**
