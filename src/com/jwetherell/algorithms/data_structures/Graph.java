@@ -127,8 +127,9 @@ public class Graph<T extends Comparable<T>> {
         public Vertex(Vertex<T> vertex) {
             this(vertex.value, vertex.weight);
             this.edges = new ArrayList<Edge<T>>();
-            for (Edge<T> e : vertex.edges)
+            for (Edge<T> e : vertex.edges) {
                 this.edges.add(new Edge<T>(e));
+            }
         }
 
         public T getValue() {
@@ -174,18 +175,21 @@ public class Graph<T extends Comparable<T>> {
         @SuppressWarnings("unchecked")
         @Override
         public boolean equals(Object v1) {
-            if (!(v1 instanceof Vertex))
+            if (!(v1 instanceof Vertex)) {
                 return false;
+            }
 
             Vertex<T> v = (Vertex<T>) v1;
 
             boolean values = this.value.equals(v.value);
-            if (!values)
+            if (!values) {
                 return false;
+            }
 
             boolean weight = this.weight == v.weight;
-            if (!weight)
+            if (!weight) {
                 return false;
+            }
 
             return true;
         }

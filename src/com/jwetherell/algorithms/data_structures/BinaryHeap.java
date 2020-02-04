@@ -61,8 +61,9 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
          * @return index of parent node or Integer.MIN_VALUE if no parent.
          */
         private static final int getParentIndex(int index) {
-            if (index > 0)
+            if (index > 0) {
                 return (int) Math.floor((index - 1) / 2);
+            }
             return Integer.MIN_VALUE;
         }
 
@@ -134,7 +135,9 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             T value = this.array[nodeIndex];
             while (nodeIndex >= 0) {
                 int parentIndex = getParentIndex(nodeIndex);
-                if (parentIndex < 0) break;
+                if (parentIndex < 0) {
+                    break;
+                }
                 T parent = this.array[parentIndex];
 
                 if ((type == Type.MIN && parent != null && value.compareTo(parent) < 0)
@@ -192,10 +195,14 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
          */
         @Override
         public boolean contains(T value) {
-            if (array.length == 0) return false;
+            if (array.length == 0) {
+                return false;
+            }
             for (int i = 0; i < size; i++) {
                 T t = array[i];
-                if (t.equals(value)) return true;
+                if (t.equals(value)) {
+                    return true;
+                }
             }
             return false;
         }
