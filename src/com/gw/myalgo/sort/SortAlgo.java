@@ -65,17 +65,16 @@ public class SortAlgo {
 
         for(int i = 1; i < arr.length; i++){
             if(arr[i-1] > arr[i]) {
-                int moveEndIdx = -1, tmp=arr[i];
-                for (int j = i - 1; j >= 0; j--) {
+                int j, tmp=arr[i];
+                for (j = i - 1; j >= 0; j--) {
                     if (arr[j] < tmp) {
-                        moveEndIdx = j;
                         break;
                     } else {
                         arr[j + 1] = arr[j];
                     }
                 }
 
-                arr[moveEndIdx + 1] = tmp;
+                arr[j + 1] = tmp;
             }
         }
 
@@ -84,7 +83,7 @@ public class SortAlgo {
 
 
     public static void main(String[] args) {
-        int[] sortedArr = new int[]{3,1,2,8,4,6,3};
+        int[] sortedArr = new int[]{1,3,1,2,8,4,6,2};
         //bubbleSort(sortedArr);
         //selectSort(sortedArr);
         insertSort(sortedArr);
