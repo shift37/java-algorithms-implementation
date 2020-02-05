@@ -65,19 +65,17 @@ public class SortAlgo {
 
         for(int i = 1; i < arr.length; i++){
             if(arr[i-1] > arr[i]) {
-                int moveEndIdx = -1;
-                for (int j = i; j >= 0; j--) {
-                    if (arr[j] < arr[i]) {
+                int moveEndIdx = -1, tmp=arr[i];
+                for (int j = i - 1; j >= 0; j--) {
+                    if (arr[j] < tmp) {
                         moveEndIdx = j;
                         break;
+                    } else {
+                        arr[j + 1] = arr[j];
                     }
                 }
 
-                int tmp = arr[i], k;
-                for (k = i; k > moveEndIdx + 1; k--) {
-                    arr[k] = arr[k - 1];
-                }
-                arr[k] = tmp;
+                arr[moveEndIdx + 1] = tmp;
             }
         }
 
