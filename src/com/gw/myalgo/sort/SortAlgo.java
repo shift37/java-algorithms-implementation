@@ -55,6 +55,48 @@ public class SortAlgo {
     }
 
     /**
+     * 2-way select sort
+     * @param arr
+     */
+    public static void selectSortUpdate(int[] arr) {
+        if(null == arr || 1 >= arr.length){
+            return;
+        }
+
+        for(int i = 0; i <= arr.length/2 ; i++){
+            int minIdx = i, maxIdx = i;
+            for(int j = i + 1; j < arr.length - i; j++) {
+                if(arr[minIdx] >= arr[j]) {
+                    minIdx  = j;
+                }
+
+                if(arr[maxIdx] <= arr[j]) {
+                    maxIdx = j;
+                }
+            }
+
+            if(minIdx != i) {
+                int tmp = arr[i];
+                arr[i] = arr[minIdx];
+                arr[minIdx] = tmp;
+                if(maxIdx == i){
+                    maxIdx = minIdx;
+                }
+            }
+
+            int n = arr.length -i -1;
+            if(maxIdx != n) {
+                int tmp = arr[n];
+                arr[n] = arr[maxIdx];
+                arr[maxIdx] = tmp;
+            }
+
+            printArr(arr);
+        }
+    }
+
+
+    /**
      * Insert sort
      * @param arr
      */
@@ -78,20 +120,62 @@ public class SortAlgo {
             }
         }
 
-
     }
 
 
-    public static void main(String[] args) {
-        int[] sortedArr = new int[]{1,3,1,2,8,4,6,2};
-        //bubbleSort(sortedArr);
-        //selectSort(sortedArr);
-        insertSort(sortedArr);
+    /**
+     * Shell sort
+     * @param arr
+     */
+    public static void shellSortMain(int[] arr){
 
+        if(null == arr || 1 >= arr.length){
+            return;
+        }
+
+        int segment = arr.length/2;
+        while(segment >= 1){
+            shellInsertSort(arr,segment);
+            segment = segment/2;
+        }
+    }
+
+    public static void shellInsertSort(int[] arr, int dk){
+            if(null == arr || 1 >= arr.length || 0 >= dk){
+                return;
+            }
+
+            for(int i=dk;  i < arr.length; ++i) {
+                if(arr[i] < arr[i -dk]) {
+                    int j = i -dk, x=arr[i];
+                    arr[i]=arr[j];
+                    while(j >= 0 && x < arr[j]){
+                        arr[j+dk] = arr[j];
+                        j -= dk;
+                    }
+                    arr[j+dk] = x;
+                }
+            }
+    }
+
+    public static void printArr(int[] arr){
         StringBuilder sb = new StringBuilder();
-        for(int value : sortedArr){
+        for(int value : arr){
             sb.append(value + ",");
         }
         System.out.println(sb.substring(0, sb.length() - 1));
+    }
+
+    public static void main(String[] args) {
+        //5,7,9,10,2,32,4,4,3
+        int[] sortedArr = new int[]{5,7,9,10,2,32,4,4,3};
+        printArr(sortedArr);
+        //bubbleSort(sortedArr);
+        //selectSort(sortedArr);
+        selectSortUpdate(sortedArr);
+        //insertSort(sortedArr);
+        //shellSortMain(sortedArr);
+
+        printArr(sortedArr);
     }
 }
