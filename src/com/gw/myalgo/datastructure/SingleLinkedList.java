@@ -1,5 +1,6 @@
 package com.gw.myalgo.datastructure;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -171,6 +172,9 @@ public class SingleLinkedList<E> implements List<E> {
     }
 
 
+    /**
+     * 正序打印List
+     */
     public void printList() {
         if(this.size > 0) {
             Node<E> tmpNode = this.headNode;
@@ -182,6 +186,32 @@ public class SingleLinkedList<E> implements List<E> {
             System.out.println();
         }
     }
+
+    /**
+     * 倒序打印列表， 递归实现
+     */
+    public void printListByRecursion() {
+        if(this.size <= 0) {
+            return;
+        }
+
+        printRecursion(this.headNode);
+        System.out.println();
+    }
+
+    public void printRecursion(Node<E> head) {
+        if(null == head) {
+            return;
+        }
+
+        if(head.next != null) {
+            printRecursion(head.next);
+        }
+
+        System.out.print(head.item + "  ");
+
+    }
+
 
     /**
      * reverse the list
@@ -209,7 +239,7 @@ public class SingleLinkedList<E> implements List<E> {
     }
 
     /**
-     * reverse the list  就地逆序
+     * reverse the list  就地逆序,需要记忆pre
      * head->1->2->3->4->6->7，after reverse
      * head->7->6->5->4->3->2->1
      */
@@ -258,9 +288,121 @@ public class SingleLinkedList<E> implements List<E> {
         }
 
         headNode =recurseReverse(headNode);
+    }
+
+
+    /**
+     * reverse the list  插入逆序，每次插入最前面
+     * head->1->2->3->4->6->7，after reverse
+     * head->7->6->5->4->3->2->1
+     */
+    public void insertReverseList() {
+        if(this.size <= 1) {
+            return;
+        }
+
+        Node<E> cur = headNode.next, next;
+        headNode.next = null;
+        while(cur != null) {
+            next = cur.next;
+
+            cur.next = headNode;
+            headNode = cur;
+            cur = next;
+        }
+    }
+
+    /**
+     * 给定一个没有排序的链表，去掉其重复项 ， 并保留原顺序，
+     * 例如链表 1->3->1->5->5->7,
+     * 去掉重复项后变为 1->3->5->7
+     */
+    public void removeRepeatItemFromUnorderedListM1(){
+        if(this.size <= 1) {
+            return;
+        }
+
+        Node<E> cur = headNode.next, innerCur, pre = headNode;
+        while(null != cur) {
+            E curItem = cur.item;
+
+            innerCur = headNode;
+            while(null != innerCur && cur != innerCur) {
+                if(innerCur.item.equals(curItem)) {
+                    break;
+                } else {
+                    innerCur = innerCur.next;
+                }
+            }
+
+            if(innerCur != null && cur != innerCur && innerCur.item.equals(cur.item)) {
+                pre.next = cur.next;
+                cur = cur.next;
+            } else {
+                pre = cur;
+                cur = cur.next;
+            }
+        }
 
     }
 
+
+    /**
+     * 给定一个没有排序的链表，去掉其重复项 ， 并保留原顺序，
+     * 例如链表 1->3->1->5->5->7,
+     * 去掉重复项后变为 1->3->5->7
+     *
+     * 递归法
+     */
+    public void removeRepeatItemFromUnorderedListM2(){
+        if(size <= 1) {
+            return;
+        }
+
+        removeRepeatItemByRecursion(this.headNode);
+    }
+
+    public void removeRepeatItemByRecursion(Node<E> node) {
+        if(null == node || null == node.next ) {
+            return;
+        } else {
+            removeRepeatItemByRecursion(node.next);
+
+            Node<E> next = node.next, pre=node;
+            while(null != next) {
+                if(node.item.equals(next.item)) {
+                    pre.next = next.next;
+                    break;
+                }
+
+                pre = next;
+                next = next.next;
+            }
+        }
+    }
+
+
+    /**
+     * 给定一个有序的链表，去掉其重复项 ， 并保留原顺序，
+     * 例如链表 1->3->3->5->5->7,
+     * 去掉重复项后变为 1->3->5->7
+     *
+     */
+    public void removeRepeatItemFromOrderedListM1(){
+        if(this.size <= 1) {
+            return;
+        }
+
+        Node<E> cur = headNode.next, pre= headNode;
+        while(cur != null) {
+            if(cur.item.equals(pre.item)) {
+                pre.next = cur.next;
+            } else {
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+    }
     private static class Node<E> {
         E item;
         Node<E> next;
@@ -275,13 +417,18 @@ public class SingleLinkedList<E> implements List<E> {
     public static void main(String[] args) {
         SingleLinkedList list = new SingleLinkedList<>(2);
 
+        list.add(2);
+        list.add(2);
         list.add(3);
-        list.add(4);
+        list.add(3);
+        list.add(3);
         list.add(5);
+        list.add(5);
+        list.add(7);
         list.add(7);
 
         list.printList();
-        list.recurseReverseList();
+        list.removeRepeatItemFromOrderedListM1();
         list.printList();
     }
 
